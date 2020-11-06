@@ -1,0 +1,12 @@
+*.mp3
+*.ipynb
+*.wav
+vcc2016_data
+__*
+trash.py
+audiotry.py
+urbansound.py
+processing\ audio.py
+*.json
+model.png
+
