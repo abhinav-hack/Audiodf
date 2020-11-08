@@ -15,7 +15,7 @@ def build_synthesizer():
     Input to the lstm layer must be three dimentional
     """
 
-    syn_inputs = Input(shape=(None, N_MELS))
+    syn_inputs = Input(shape=(345, N_MELS))
     lstm_lyr = LSTM(64, return_sequences=True)(syn_inputs)  # (input = (timestep, features))
     lstm_lyr = LSTM(32)(lstm_lyr)
     dense_lyr = Dense(128, activation='relu')(lstm_lyr)
@@ -28,3 +28,5 @@ def build_synthesizer():
     synthesizer.compile(optimizer=Adam(), loss=mse, metrics=['accuracy'])
     return synthesizer
 
+
+synthesizer = build_synthesizer()
