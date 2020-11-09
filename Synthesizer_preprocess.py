@@ -6,30 +6,23 @@ import numpy as np
 import playsound
 import os
 import time
-from Encoder_preprocess import access_file
+from utils import access_file, load_audio
+
 
 HOP_LENGTH = 256
 SR = 22050
 DATASET_PATH = "/home/hacker/Documents/audio/vcc2016_data"
 N_MELS = 60
-SAMPLE_LEN = 22050 * 4
 
 
 
-def synthesize_dataset(file_path, hop_length=256, n_mels=60, n_fft=2048, sr=22050):
+def synthesize_dataset(signal, hop_length=256, n_mels=60, n_fft=2048, sr=22050):
     
     """
         prepare mel spectrogram from the audio files """ 
 
     start = time.time()
 
-    signal, sr = librosa.load(file_path)
-
-
-    if len(signal) < SAMPLE_LEN:
-        signal = np.pad(signal, (0,SAMPLE_LEN-len(signal)))
-    else :
-        signal = signal[:SAMPLE_LEN]
 
     mel = librosa.feature.melspectrogram(signal, sr=sr, hop_length=hop_length, n_fft=n_fft, n_mels=n_mels)
 
