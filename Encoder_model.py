@@ -10,13 +10,16 @@ from keras.layers import concatenate, Flatten, Reshape
 from keras.layers.convolutional import Conv2D
 from keras.layers.pooling import MaxPooling2D
 from Encoder_preprocess import *
+from utils import *
+
+
 
 def build_encoder():
     """
     Creating Model  
     """
 
-    enc_inputs = Input(shape=(N_MFCC*3, 345, 1))
+    enc_inputs = Input(shape=(N_MFCC*3, BATCH, 1))
     conv_lyr = Conv2D(64, kernel_size=3, padding='same', activation='relu')(enc_inputs)
     pooled_lyr = MaxPooling2D(pool_size=2, padding='same')(conv_lyr)
     conv_lyr = Conv2D(32, kernel_size=3, padding='same', activation='relu')(pooled_lyr)

@@ -6,8 +6,7 @@ from keras.layers.advanced_activations import LeakyReLU
 from keras.optimizers import Adam
 from keras.losses import mse
 from Synthesizer_preprocess import *
-
-
+from utils import *
 
 
 def build_synthesizer():
@@ -16,11 +15,11 @@ def build_synthesizer():
     Input to the lstm layer must be three dimentional
     """
 
-    syn_inputs = Input(shape=(345, N_MELS))
+    syn_inputs = Input(shape=(N, N_MELS))
     lstm_lyr = LSTM(64, return_sequences=True)(syn_inputs)  # (input = (timestep, features))
-    lstm_lyr = LSTM(32)(lstm_lyr)
+    lstm_lyr = LSTM(64)(lstm_lyr)
     dense_lyr = Dense(128, activation='relu')(lstm_lyr)
-    syn_outputs = Dense(64, activation='relu')(dense_lyr)
+    syn_outputs = Dense(256, activation='relu')(dense_lyr)
 
     synthesizer = Model(inputs=syn_inputs, outputs=syn_outputs, name='synthesizer')
     synthesizer.summary()
@@ -30,4 +29,5 @@ def build_synthesizer():
     return synthesizer
 
 
-synthesizer = build_synthesizer()
+if __name__ == '__main__':
+    synthesizer = build_synthesizer()

@@ -18,17 +18,12 @@ def build_combined_model():
     synthesizer = build_synthesizer()
     vocoder = build_vocoder()
 
-    voice_map_input = Input(shape=(N_MFCC*3, 345, 1))
-    signal_input = Input(shape=(345, N_MELS))
-    comb_enc = encoder(voice_map_input)
-    comb_syn = synthesizer(signal_input)
-    comb_lyr = concatenate([comb_enc, comb_syn])
+    comb_lyr = concatenate([encoder.output, synthesizer.output])
     output_model = vocoder(comb_lyr)
-
-    combined = Model(inputs=[signal_input, voice_map_input], outputs=output_model, name='combined')
-    combined.summary()
-
+    combined = Model(inputs=[encoder.input, synthesizer.input], outputs=output_model, name='combined')
+    combined.compile(optimizer=Adam(), loss=mse, metrics=['accuracy'])
     keras.utils.plot_model(combined, show_shapes=True)
+    combined.summary()
     return combined
 
 if __name__ == "__main__":

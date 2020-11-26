@@ -6,12 +6,10 @@ import numpy as np
 import os
 import json
 import time
-from utils import access_file, load_audio
+from utils import *
 
-HOP_LENGTH = 256
-SR = 22050
+
 DATASET_PATH = "/home/hacker/Documents/audio/vcc2016_data"
-N_MFCC = 20
 
 
 def encode_dataset(voice_map, hop_length=256, n_mfcc=20, n_fft=2048, sr=22050):
@@ -42,7 +40,12 @@ def encode_dataset(voice_map, hop_length=256, n_mfcc=20, n_fft=2048, sr=22050):
     comprehensive_mfccs = np.concatenate((log_mfccs, 
                                         log_delta,
                                         log_delta2))    
-    comprehensive_mfccs = comprehensive_mfccs[..., np.newaxis]
+    
+    #comprehensive_mfccs = comprehensive_mfccs.reshape((60, BATCH))
+
+    comprehensive_mfccs = np.tile(comprehensive_mfccs, ((BATCH-1)//N, 1, 1)) #(69, 60, 346) 69-copies
+    
+
     # try chroma also - displays energy in nodes
     """ chromagram = librosa.feature.chroma_stft(signal, sr=sr, hop_length=HOP_LENGTH)
     plt.figure(figsize=(15, 5))
@@ -72,7 +75,8 @@ if __name__ == "__main__":
     file_list = access_file("/home/hacker/Documents/audio/vcc2016_data/SF1/")
     audio_list = []
     for files in file_list:
-        tm = encode_dataset(files)
+        tm = load_audio(files)
+        tm = encode_dataset(tm)
         audio_list.append(tm)
     
 """ 

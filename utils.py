@@ -10,6 +10,7 @@ N_MELS = 60
 SAMPLE_LEN = 88320   # taking round figure for model
 BATCH = (SAMPLE_LEN // HOP_LENGTH) +1
 N = 5
+# load sound file with shape (69, 1280)
 
 def access_file(dataset_path):
     """ Return list all file path in the given directory"""
