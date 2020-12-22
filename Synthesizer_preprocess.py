@@ -18,7 +18,6 @@ def synthesize_dataset(signal, hop_length=256, n_mels=60, n_fft=2048, sr=22050):
     """
         prepare mel spectrogram from the audio files """ 
 
-    start = time.time()
 
 
     mel = librosa.feature.melspectrogram(signal, sr=sr, hop_length=hop_length, n_fft=n_fft, n_mels=n_mels)
@@ -26,13 +25,13 @@ def synthesize_dataset(signal, hop_length=256, n_mels=60, n_fft=2048, sr=22050):
     log_mel = librosa.power_to_db(mel)
 
     log_mel_trans = log_mel[..., np.newaxis].T
-    stop = time.time()
-    print("time :",stop-start)
+
+
     log_mel_trans = log_mel_trans.reshape((BATCH, 1, 60))
     log_mel_trans = np.delete(log_mel_trans, BATCH-1, axis=0)   #(345, 1, 60)
-    log_mel_trans = log_mel_trans.reshape(((BATCH-1)//N, N, 60))  #(69, 5, 60)
+    #log_mel_trans = log_mel_trans.reshape(((BATCH-1)//N, N, 60))  #(69, 5, 60)
 
-    print(log_mel_trans.shape)
+    #print(log_mel_trans.shape)
 
     return log_mel_trans
 

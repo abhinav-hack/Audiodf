@@ -12,6 +12,7 @@ BATCH = (SAMPLE_LEN // HOP_LENGTH) +1
 N = 5
 # load sound file with shape (69, 1280)
 
+
 def access_file(dataset_path):
     """ Return list all file path in the given directory"""
 
@@ -25,17 +26,20 @@ def access_file(dataset_path):
         return file_list
     except :
         print("file not found for accessing dataset")
+        
 
 
 def load_audio(file_path):
     """ load audio with specific length and sr with librosa only for one file """
     try:
         signal, sr = librosa.load(file_path)
-    except :
-        print("error reading audio file")
-    if len(signal) < SAMPLE_LEN:
-        signal = np.pad(signal, (0,SAMPLE_LEN-len(signal)))
-    else :
-        signal = signal[:SAMPLE_LEN]
     
-    return signal
+        if len(signal) < SAMPLE_LEN:
+            signal = np.pad(signal, (0,SAMPLE_LEN-len(signal)))
+        else :
+            signal = signal[:SAMPLE_LEN]
+        
+        return signal
+    except :
+        print("Error reading audio file")
+        

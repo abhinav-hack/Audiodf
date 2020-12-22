@@ -17,7 +17,6 @@ def encode_dataset(voice_map, hop_length=256, n_mfcc=20, n_fft=2048, sr=22050):
     """
         prepare mfcc from the audio files """ 
 
-    start = time.time()
 
     # processing audio
 
@@ -43,7 +42,7 @@ def encode_dataset(voice_map, hop_length=256, n_mfcc=20, n_fft=2048, sr=22050):
     
     #comprehensive_mfccs = comprehensive_mfccs.reshape((60, BATCH))
 
-    comprehensive_mfccs = np.tile(comprehensive_mfccs, ((BATCH-1)//N, 1, 1)) #(69, 60, 346) 69-copies
+    comprehensive_mfccs = np.tile(comprehensive_mfccs, ((BATCH-1), 1, 1)) #(345, 60, 346) 69-copies
     
 
     # try chroma also - displays energy in nodes
@@ -52,9 +51,7 @@ def encode_dataset(voice_map, hop_length=256, n_mfcc=20, n_fft=2048, sr=22050):
     librosa.display.specshow(chromagram, x_axis='time', y_axis='chroma', hop_length=HOP_LENGTH, cmap='coolwarm')
     """
     
-    stop = time.time()
-    print(comprehensive_mfccs.shape)
-    print("time :", stop-start)
+    #print(comprehensive_mfccs.shape)
     return comprehensive_mfccs
 
 
