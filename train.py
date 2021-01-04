@@ -7,6 +7,7 @@ from Encoder_preprocess import *
 from Synthesizer_preprocess import *
 from Combined_model import build_combined_model
 import time
+from tqdm import tqdm
 
 # build model combined
 com_model = build_combined_model()
@@ -17,10 +18,10 @@ sound_file_path_list = access_file("./vcc2016_data/SM1")
 
 #load model weights
 start = time.time()
-for epoch in range(EPOCHS):
-    #com_model.load_weights("./model_check/checkpoint")
+for epoch in tqdm(range(EPOCHS), desc="time to complete:"):
+    com_model.load_weights("./checkpoint/chk")
     print("Epochs : ", epoch)
-    for sound_file in sound_file_path_list:
+    for sound_file in tqdm(sound_file_path_list, desc = "file time"):
 
         sound = load_audio(sound_file)
 
@@ -37,7 +38,7 @@ for epoch in range(EPOCHS):
         stop = time.time()
         print(stop-start)
     print("saving checkpoints, Do not stop training")
-    com_model.save_weights("./model_check/checkpoint")
+    com_model.save_weights("./checkpoint/chk")
     print("done, checkpoints saved.")
 stop = time.time()
 print(stop-start)

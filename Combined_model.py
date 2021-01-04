@@ -27,7 +27,7 @@ def build_combined_model():
     comb_lyr = concatenate([encoder.output, synthesizer.output])
     output_model = vocoder(comb_lyr)
     combined = Model(inputs=[encoder.input, synthesizer.input], outputs=output_model, name='combined')
-    combined.compile(optimizer=Adam(learning_rate=0.00001), loss='mean_absolute_error', metrics=['accuracy'])
+    combined.compile(optimizer=SGD(learning_rate=0.1), loss='kullback_leibler_divergence', metrics=['accuracy'])
     keras.utils.plot_model(combined, show_shapes=True)
     combined.summary()
     return combined
