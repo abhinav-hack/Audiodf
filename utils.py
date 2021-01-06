@@ -6,7 +6,8 @@ import numpy as np
 HOP_LENGTH = 256
 SR = 22050
 N_MFCC = 20
-N_MELS = 60
+N_MELS = 27
+N_FFT = 2048
 SAMPLE_LEN = 88320   # taking round figure for model
 BATCH = (SAMPLE_LEN // HOP_LENGTH) +1
 N = 5

@@ -22,10 +22,10 @@ def build_encoder():
     enc_inputs = Input(shape=(N_MFCC*3, BATCH, 1))
     conv_lyr = Conv2D(64, kernel_size=3, padding='same', activation='relu')(enc_inputs)
     pooled_lyr = MaxPooling2D(pool_size=2, padding='same')(conv_lyr)
-    conv_lyr = Conv2D(32, kernel_size=3, padding='same', activation='relu')(pooled_lyr)
+    conv_lyr = Conv2D(128, kernel_size=3, padding='same', activation='relu')(pooled_lyr)
     flat_lyr = Flatten()(conv_lyr)
     dense_lyr = Dense(128, activation=LeakyReLU(alpha=0.1))(flat_lyr)
-    enc_outputs = Dense(64)(dense_lyr)
+    enc_outputs = Dense(128)(dense_lyr)
 
     encoder = Model(inputs=enc_inputs, outputs=enc_outputs, name="encoder")
     encoder.summary()

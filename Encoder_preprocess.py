@@ -12,7 +12,7 @@ from utils import *
 DATASET_PATH = "/home/hacker/Documents/audio/vcc2016_data"
 
 
-def encode_dataset(voice_map, hop_length=256, n_mfcc=20, n_fft=2048, sr=22050):
+def encode_dataset(voice_map, hop_length=HOP_LENGTH, n_mfcc=N_MFCC, n_fft=N_FFT, sr=SR):
     
     """
         prepare mfcc from the audio files """ 
@@ -61,7 +61,7 @@ def plot_spec(voice_map, sr, hop_length=HOP_LENGTH, x_axis=None, y_axis=None):
                     '''
                     plt.figure(figsize=(25,10))
                     librosa.display.specshow(voice_map, sr=sr,
-                                            hop_length=HOP_LENGTH,
+                                            hop_length=hop_length,
                                             x_axis=x_axis,
                                             y_axis= y_axis)
                     plt.colorbar(format="%+2.f")
